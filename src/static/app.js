@@ -4,6 +4,50 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
 
+  // Função para criar explosão de arco-íris
+  function createRainbowBlast(x, y) {
+    const rainbowEmojis = ['🌈', '✨', '⭐', '💫', '🦄', '🌟', '💖', '💜', '💙', '💚', '💛'];
+    // Ajustar número de blasts baseado no tamanho da tela
+    const isMobile = window.innerWidth <= 768;
+    const numberOfBlasts = isMobile ? 10 : 15;
+    
+    for (let i = 0; i < numberOfBlasts; i++) {
+      const blast = document.createElement('div');
+      blast.className = 'rainbow-blast';
+      blast.textContent = rainbowEmojis[Math.floor(Math.random() * rainbowEmojis.length)];
+      blast.style.left = x + 'px';
+      blast.style.top = y + 'px';
+      
+      // Adicionar variação na animação
+      const angle = (i / numberOfBlasts) * 360;
+      const distance = isMobile ? 50 : 100 + Math.random() * 100;
+      blast.style.setProperty('--angle', angle + 'deg');
+      blast.style.animationDelay = (i * 0.05) + 's';
+      
+      document.body.appendChild(blast);
+      
+      // Remover elemento após animação
+      setTimeout(() => {
+        blast.remove();
+      }, 1000);
+    }
+  }
+
+  // Adicionar evento de clique em todos os botões
+  document.addEventListener('click', (event) => {
+    if (event.target.tagName === 'BUTTON') {
+      createRainbowBlast(event.clientX, event.clientY);
+    }
+  });
+
+  // Adicionar suporte para touch em dispositivos móveis
+  document.addEventListener('touchstart', (event) => {
+    if (event.target.tagName === 'BUTTON' && event.touches.length > 0) {
+      const touch = event.touches[0];
+      createRainbowBlast(touch.clientX, touch.clientY);
+    }
+  });
+
   // Function to fetch activities from API
   async function fetchActivities() {
     try {
