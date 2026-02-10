@@ -19,10 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
       blast.style.top = y + 'px';
       
       // Adicionar variação na animação
-      const angle = (i / numberOfBlasts) * 360;
-      const distance = isMobile ? 50 : 100 + Math.random() * 100;
-      blast.style.setProperty('--angle', angle + 'deg');
       blast.style.animationDelay = (i * 0.05) + 's';
+      
+      
+      
       
       document.body.appendChild(blast);
       
